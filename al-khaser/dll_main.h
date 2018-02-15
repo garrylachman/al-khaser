@@ -18,9 +18,14 @@ namespace AlKhaser {
 	private:
 		Detector();
 		~Detector();
-		bool RunCheck();
+		bool RunCheck(std::vector<int(*)()> list);
 
-		std::vector<int(*)()> checkers;
+		std::vector<int(*)()> checkers_AntiAnalysis;
+		std::vector<int(*)()> checkers_AntiDebug;
+		std::vector<int(*)()> checkers_AntiDump;
+		std::vector<int(*)()> checkers_AntiVM;
+		std::vector<int(*)()> checkers_AntiInjection;
+		std::vector<int(*)()> checkers_AntiTiminngAttacks;
 		static Detector *m_self;
 	};
 }

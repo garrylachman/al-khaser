@@ -13,15 +13,43 @@ namespace AlKhaser
 		{
 			m_self = new Detector();
 		}
-		return m_self->RunCheck();
+		return m_self->RunCheck(m_self->checkers_AntiDebug);
 	}
 
 	Detector::Detector()
 	{
-		checkers.assign({
+		checkers_AntiDebug.assign({
 			&IsDebuggerPresentAPI,
 			&IsDebuggerPresentPEB,
-			&CheckRemoteDebuggerPresentAPI
+			&CheckRemoteDebuggerPresentAPI,
+			&NtGlobalFlag,
+			&HeapFlags,
+			&HeapForceFlags,
+			&NtQueryInformationProcess_ProcessDebugPort,
+			&NtQueryInformationProcess_ProcessDebugFlags,
+			&NtQueryInformationProcess_ProcessDebugObject,
+			&NtSetInformationThread_ThreadHideFromDebugger,
+			&CloseHandle_InvalideHandle,
+			&UnhandledExcepFilterTest,
+			&OutputDebugStringAPI,
+			&HardwareBreakpoints,
+			&SoftwareBreakpoints,
+			&Interrupt_0x2d,
+			&Interrupt_3,
+			&MemoryBreakpoints_PageGuard,
+			&IsParentExplorerExe,
+			&CanOpenCsrss,
+			&NtQueryObject_ObjectTypeInformation,
+			&NtQueryObject_ObjectAllTypesInformation,
+			&NtYieldExecutionAPI,
+			&SetHandleInformatiom_ProtectedHandle,
+			&NtQuerySystemInformation_SystemKernelDebuggerInformation,
+			&SharedUserData_KernelDebugger,
+			&ProcessJob,
+			&VirtualAlloc_WriteWatch_BufferOnly,
+			&VirtualAlloc_WriteWatch_APICalls,
+			&VirtualAlloc_WriteWatch_IsDebuggerPresent,
+			&VirtualAlloc_WriteWatch_CodeWrite
 		});
 	}
 
@@ -29,11 +57,11 @@ namespace AlKhaser
 	{
 	}
 
-	bool Detector::RunCheck()
+	bool Detector::RunCheck(std::vector<int(*)()> list)
 	{
 		bool isFail = false;
 
-		std::for_each(checkers.begin(), checkers.end(), [&isFail](int(*callback)()) {
+		std::for_each(list.begin(), list.end(), [&isFail](int(*callback)()) {
 			int result = callback();
 			printf("checker result: %i\n", result);
 			if (result)
