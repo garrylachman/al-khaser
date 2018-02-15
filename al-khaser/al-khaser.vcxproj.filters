@@ -238,6 +238,7 @@
     <ClCompile Include="Anti Debug\WriteWatch.cpp">
       <Filter>Anti Debug\Source</Filter>
     </ClCompile>
+    <ClCompile Include="dll_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shared\VersionHelpers.h">
@@ -405,6 +406,7 @@
     <ClInclude Include="Anti Debug\WriteWatch.h">
       <Filter>Anti Debug\Header</Filter>
     </ClInclude>
+    <ClInclude Include="dll_main.h" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="Anti Debug\int2d_x64.asm">
