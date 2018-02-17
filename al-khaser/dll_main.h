@@ -12,20 +12,19 @@
 namespace AlKhaser {
 	class ALKHASER_API Detector
 	{
-	public:
-		static bool Check();
+		enum CHECKERS { ANALYSIS, DEBUG, DUMP, VM, ALL };
 
-	private:
+	public:		
+		static int Check(Detector::CHECKERS _checker);
 		Detector();
 		~Detector();
-		bool RunCheck(std::vector<int(*)()> list);
+		int RunCheck(std::vector<int(*)()> list);
 
+	private:
 		std::vector<int(*)()> checkers_AntiAnalysis;
 		std::vector<int(*)()> checkers_AntiDebug;
 		std::vector<int(*)()> checkers_AntiDump;
 		std::vector<int(*)()> checkers_AntiVM;
-		std::vector<int(*)()> checkers_AntiInjection;
-		std::vector<int(*)()> checkers_AntiTiminngAttacks;
 		static Detector *m_self;
 	};
 }

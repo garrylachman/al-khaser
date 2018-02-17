@@ -4,7 +4,7 @@
 Check for process list
 */
 
-VOID analysis_tools_process()
+BOOL analysis_tools_process()
 {
 	TCHAR *szProcesses[] = {
 		_T("ollydbg.exe"),			// OllyDebug debugger
@@ -40,8 +40,8 @@ VOID analysis_tools_process()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking process of malware analysis tool: %s: "), szProcesses[i]);
 		if (GetProcessIdFromName(szProcesses[i]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }

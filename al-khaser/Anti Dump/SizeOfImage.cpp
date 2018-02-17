@@ -2,7 +2,7 @@
 
 // Any unreasonably large value will work say for example 0x100000 or 100,000h
 
-VOID SizeOfImage()
+BOOL SizeOfImage()
 {
 
 #if defined (ENV64BIT)
@@ -14,4 +14,5 @@ VOID SizeOfImage()
 	_tprintf(_T("[*] Increasing SizeOfImage in PE Header to: 0x100000\n"));
 	PLDR_DATA_TABLE_ENTRY tableEntry = (PLDR_DATA_TABLE_ENTRY)(pPeb->Ldr->InMemoryOrderModuleList.Flink);
 	tableEntry->DllBase = (PVOID)((INT_PTR)tableEntry->DllBase + 0x100000);
+	return FALSE;
 }

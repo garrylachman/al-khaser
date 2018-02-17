@@ -4,7 +4,7 @@
 Registry key values
 */
 
-VOID vbox_reg_key_value()
+BOOL vbox_reg_key_value()
 {
 	/* Array of strings of blacklisted registry key values */
 	TCHAR *szEntries[][3] = {
@@ -21,16 +21,16 @@ VOID vbox_reg_key_value()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking reg key HARDWARE\\Description\\System - %s is set to %s:"), szEntries[i][1], szEntries[i][2]);
 		if (Is_RegKeyValueExists(HKEY_LOCAL_MACHINE, szEntries[i][0], szEntries[i][1], szEntries[i][2]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
 /*
 Check against virtualbox registry keys
 */
-VOID vbox_reg_keys()
+BOOL vbox_reg_keys()
 {
 	/* Array of strings of blacklisted registry keys */
 	TCHAR* szKeys[] = {
@@ -53,9 +53,9 @@ VOID vbox_reg_keys()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking reg key %s: "), szKeys[i]);
 		if (Is_RegKeyExists(HKEY_LOCAL_MACHINE, szKeys[i]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
@@ -63,7 +63,7 @@ VOID vbox_reg_keys()
 /*
 Check against virtualbox blacklisted files
 */
-VOID vbox_files()
+BOOL vbox_files()
 {
 	/* Array of strings of blacklisted paths */
 	TCHAR* szPaths[] = {
@@ -99,9 +99,9 @@ VOID vbox_files()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking file %s: "), szPath);
 		if (is_FileExists(szPath))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
@@ -139,7 +139,7 @@ BOOL vbox_check_mac()
 /*
 Check against pseaudo-devices
 */
-VOID vbox_devices()
+BOOL vbox_devices()
 {
 	TCHAR *devices[] = {
 		_T("\\\\.\\VBoxMiniRdrDN"),
@@ -156,9 +156,9 @@ VOID vbox_devices()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking device %s: "), devices[i]);
 		if (hFile != INVALID_HANDLE_VALUE)
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
@@ -198,7 +198,7 @@ BOOL vbox_network_share()
 Check for process list
 */
 
-VOID vbox_processes()
+BOOL vbox_processes()
 {
 	TCHAR *szProcesses[] = {
 		_T("vboxservice.exe"),
@@ -211,9 +211,9 @@ VOID vbox_processes()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking virtual box processe %s: "), szProcesses[i]);
 		if (GetProcessIdFromName(szProcesses[i]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 

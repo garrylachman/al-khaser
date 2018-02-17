@@ -2,7 +2,7 @@
 #include "../Shared/Utils.h"
 
 
-VOID analysis_tools_process();
+BOOL analysis_tools_process();
 
 /*
 

@@ -2,4 +2,4 @@
 #include "../Shared/Utils.h"
 
 
-VOID virtual_pc_process();
+BOOL virtual_pc_process();

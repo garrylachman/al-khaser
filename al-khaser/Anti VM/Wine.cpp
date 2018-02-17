@@ -25,7 +25,7 @@ BOOL wine_exports()
 /*
 Check against Wine registry keys
 */
-VOID wine_reg_keys()
+BOOL wine_reg_keys()
 {
 	/* Array of strings of blacklisted registry keys */
 	TCHAR* szKeys[] = {
@@ -40,8 +40,8 @@ VOID wine_reg_keys()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking reg key %s: "), szKeys[i]);
 		if (Is_RegKeyExists(HKEY_CURRENT_USER, szKeys[i]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }

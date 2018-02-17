@@ -10,7 +10,7 @@ Check of following dll are loaded
  - vmcheck.dll (Virtual PC)
  - wpespy.dll (WPE Pro)
 */
-VOID loaded_dlls()
+BOOL loaded_dlls()
 {
 	/* Some vars */
 	HMODULE hDll;
@@ -36,9 +36,9 @@ VOID loaded_dlls()
 		/* Check if process loaded modules contains the blacklisted dll */
 		hDll = GetModuleHandle(szDlls[i]);
 		if (hDll == NULL)
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 		else
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 	}
 }
 

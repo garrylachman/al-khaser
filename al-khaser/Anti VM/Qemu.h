@@ -4,4 +4,4 @@
 #include "..\Shared\Utils.h"
 
 
-VOID qemu_reg_key_value();
+BOOL qemu_reg_key_value();

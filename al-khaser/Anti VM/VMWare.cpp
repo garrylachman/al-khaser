@@ -3,7 +3,7 @@
 /*
 Check against VMWare registry key values
 */
-VOID vmware_reg_key_value()
+BOOL vmware_reg_key_value()
 {
 	/* Array of strings of blacklisted registry key values */
 	TCHAR *szEntries[][3] = {
@@ -19,9 +19,9 @@ VOID vmware_reg_key_value()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking reg key %s:"), szEntries[i][0]);
 		if (Is_RegKeyValueExists(HKEY_LOCAL_MACHINE, szEntries[i][0], szEntries[i][1], szEntries[i][2]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return  print_results(FALSE, msg);
 	}
 }
 
@@ -30,7 +30,7 @@ VOID vmware_reg_key_value()
 /*
 Check against VMWare registry keys
 */
-VOID vmware_reg_keys()
+BOOL vmware_reg_keys()
 {
 	/* Array of strings of blacklisted registry keys */
 	TCHAR* szKeys[] = {
@@ -45,9 +45,9 @@ VOID vmware_reg_keys()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking reg key %s: "), szKeys[i]);
 		if (Is_RegKeyExists(HKEY_LOCAL_MACHINE, szKeys[i]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
@@ -55,7 +55,7 @@ VOID vmware_reg_keys()
 /*
 Check against VMWare blacklisted files
 */
-VOID vmware_files()
+BOOL vmware_files()
 {
 	/* Array of strings of blacklisted paths */
 	TCHAR* szPaths[] = {
@@ -76,9 +76,9 @@ VOID vmware_files()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking file %s: "), szPath);
 		if (is_FileExists(szPath))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
@@ -104,7 +104,7 @@ BOOL vmware_dir()
 /*
 Check VMWare NIC MAC addresses
 */
-VOID vmware_mac()
+BOOL vmware_mac()
 {
 	/* VMWre blacklisted mac adr */
 	TCHAR *szMac[][2] = {
@@ -122,9 +122,9 @@ VOID vmware_mac()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking MAC starting with: %s"), szMac[i][1]);
 		if (check_mac_addr(szMac[i][0]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
@@ -145,7 +145,7 @@ BOOL vmware_adapter_name()
 /*
 Check against VMWare pseaudo-devices
 */
-VOID vmware_devices()
+BOOL vmware_devices()
 {
 	TCHAR *devices[] = {
 		_T("\\\\.\\HGFS"),
@@ -160,9 +160,9 @@ VOID vmware_devices()
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking device %s: "), devices[i]);
 		
 		if (hFile != INVALID_HANDLE_VALUE)
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }
 
@@ -171,7 +171,7 @@ VOID vmware_devices()
 Check for process list
 */
 
-VOID vmware_processes()
+BOOL vmware_processes()
 {
 	TCHAR *szProcesses[] = {
 		_T("vmtoolsd.exe"),
@@ -185,8 +185,8 @@ VOID vmware_processes()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking vmware processe %s: "), szProcesses[i]);
 		if (GetProcessIdFromName(szProcesses[i]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }

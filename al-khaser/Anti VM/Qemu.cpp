@@ -4,7 +4,7 @@
 Registry key values
 */
 
-VOID qemu_reg_key_value()
+BOOL qemu_reg_key_value()
 {
 	/* Array of strings of blacklisted registry key values */
 	TCHAR *szEntries[][3] = {
@@ -19,8 +19,8 @@ VOID qemu_reg_key_value()
 		TCHAR msg[256] = _T("");
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking reg key %s: "), szEntries[i][0]);
 		if (Is_RegKeyValueExists(HKEY_LOCAL_MACHINE, szEntries[i][0], szEntries[i][1], szEntries[i][2]))
-			print_results(TRUE, msg);
+			return print_results(TRUE, msg);
 		else
-			print_results(FALSE, msg);
+			return print_results(FALSE, msg);
 	}
 }

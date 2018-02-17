@@ -3,7 +3,7 @@
 /* This function will erase the current images PE header from memory preventing a successful image if dumped */
 
 
-VOID ErasePEHeaderFromMemory()
+BOOL ErasePEHeaderFromMemory()
 {
 	_tprintf(_T("[*] Erasing PE header from memory\n"));
 	DWORD OldProtect = 0;
@@ -17,6 +17,7 @@ VOID ErasePEHeaderFromMemory()
 
 	// Erase the header
 	SecureZeroMemory(pBaseAddr, 4096);
+	return FALSE;
 }
 
 

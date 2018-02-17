@@ -2,4 +2,4 @@
 #include "../Shared/Utils.h"
 
 
-VOID xen_process();
+BOOL xen_process();

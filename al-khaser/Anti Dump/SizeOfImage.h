@@ -2,4 +2,4 @@
 #include <Winternl.h>
 #include "..\Shared\Utils.h"
 
-VOID SizeOfImage();
+BOOL SizeOfImage();

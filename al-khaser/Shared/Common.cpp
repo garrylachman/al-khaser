@@ -50,7 +50,7 @@ VOID print_category(TCHAR* text)
 	SetConsoleTextAttribute(nStdHandle, OriginalColors);
 }
 
-VOID print_results(int result, TCHAR* szMsg)
+int print_results(int result, TCHAR* szMsg)
 {
 	_tprintf(TEXT("[*] %s"), szMsg);
 
@@ -70,6 +70,7 @@ VOID print_results(int result, TCHAR* szMsg)
 	TCHAR buffer[256] = _T("");
 	_stprintf_s(buffer, sizeof(buffer) / sizeof(TCHAR), _T("[*] %s -> %d"), szMsg, result);
 	LOG_PRINT(buffer);
+	return result;
 }
 
 VOID exec_check(int(*callback)(), TCHAR* szMsg) 

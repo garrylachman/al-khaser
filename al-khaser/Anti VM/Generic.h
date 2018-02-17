@@ -12,7 +12,7 @@
 #include "../Shared/Utils.h"
 #include "../Shared/VersionHelpers.h"
 
-VOID loaded_dlls();
+BOOL loaded_dlls();
 BOOL NumberOfProcessors();
 BOOL idt_trick();
 BOOL ldt_trick();
