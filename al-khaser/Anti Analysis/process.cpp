@@ -7,6 +7,8 @@ Check for process list
 BOOL analysis_tools_process()
 {
 	TCHAR *szProcesses[] = {
+		_T("perfmon.exe"),			// Resource Monitor
+		_T("Taskmgr.exe"),			// Task Manager
 		_T("ollydbg.exe"),			// OllyDebug debugger
 		_T("ProcessHacker.exe"),	// Process Hacker
 		_T("tcpview.exe"),			// Part of Sysinternals Suite
@@ -41,7 +43,6 @@ BOOL analysis_tools_process()
 		_stprintf_s(msg, sizeof(msg) / sizeof(TCHAR), _T("Checking process of malware analysis tool: %s: "), szProcesses[i]);
 		if (GetProcessIdFromName(szProcesses[i]))
 			return print_results(TRUE, msg);
-		else
-			return print_results(FALSE, msg);
 	}
+	return FALSE;
 }
