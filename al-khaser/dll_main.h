@@ -12,9 +12,15 @@
 namespace AlKhaser {
 	class ALKHASER_API Detector
 	{
-		enum CHECKERS { ANALYSIS, DEBUG, DUMP, VM, ALL };
+	public:
+		static enum CHECKERS {
+			ANALYSIS = 0,
+			DEBUG,
+			DUMP,
+			VM,
+			ALL
+		} CTYPE;
 
-	public:		
 		static int Check(Detector::CHECKERS _checker);
 		Detector();
 		~Detector();

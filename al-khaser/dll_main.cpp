@@ -32,14 +32,14 @@ namespace AlKhaser
 			break;
 
 		case CHECKERS::ALL:
-			BOOL ret = (m_self->RunCheck(m_self->checkers_AntiAnalysis)
-				&& m_self->RunCheck(m_self->checkers_AntiDebug)
-				&& m_self->RunCheck(m_self->checkers_AntiVM)
-				&& m_self->RunCheck(m_self->checkers_AntiDump));
-			return ret;
+			if (m_self->RunCheck(m_self->checkers_AntiAnalysis)) return TRUE;
+			if (m_self->RunCheck(m_self->checkers_AntiDebug)) return TRUE;
+			if (m_self->RunCheck(m_self->checkers_AntiDump)) return TRUE;
+			if (m_self->RunCheck(m_self->checkers_AntiVM)) return TRUE;
+			return FALSE;
 			break;
 		}
-		return TRUE;
+		return FALSE;
 	}
 
 	Detector::Detector()
@@ -63,15 +63,15 @@ namespace AlKhaser
 			&Interrupt_0x2d,
 			&Interrupt_3,
 			&MemoryBreakpoints_PageGuard,
-			&IsParentExplorerExe,
+			//&IsParentExplorerExe,
 			&CanOpenCsrss,
 			&NtQueryObject_ObjectTypeInformation,
 			&NtQueryObject_ObjectAllTypesInformation,
-			&NtYieldExecutionAPI,
+			//&NtYieldExecutionAPI,
 			&SetHandleInformatiom_ProtectedHandle,
-			&NtQuerySystemInformation_SystemKernelDebuggerInformation,
+			//&NtQuerySystemInformation_SystemKernelDebuggerInformation,
 			&SharedUserData_KernelDebugger,
-			&ProcessJob,
+			//&ProcessJob,
 			&VirtualAlloc_WriteWatch_BufferOnly,
 			&VirtualAlloc_WriteWatch_APICalls,
 			&VirtualAlloc_WriteWatch_IsDebuggerPresent,
@@ -96,7 +96,7 @@ namespace AlKhaser
 			&cpuid_hypervisor_vendor,
 			&FirmwareSMBIOS,
 			&FirmwareACPI,
-			&accelerated_sleep,
+			//&accelerated_sleep,
 			&VMDriverServices,
 			&vbox_reg_key_value,
 			&vbox_dir,
@@ -139,20 +139,23 @@ namespace AlKhaser
 	{
 	}
 
+
 	BOOL Detector::RunCheck(std::vector<int(*)()> list)
 	{
 		BOOL isFail = FALSE;
-
-		std::for_each(list.begin(), list.end(), [&isFail](int(*callback)()) {
+		int fidx = 0;
+		std::for_each(list.begin(), list.end(), [&isFail, &fidx](int(*callback)()) {
+			printf("calling f: %i\n", fidx);
 			int result = callback();
 			printf("checker result: %i\n", result);
 			if (result)
 			{
 				isFail = TRUE;
-				return;
+				//return;
 			}
+			fidx++;
 		});
-
+		printf("check result: %i\n\n", isFail);
 		return isFail;
 	}
 }
