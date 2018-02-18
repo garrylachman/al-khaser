@@ -145,17 +145,22 @@ namespace AlKhaser
 		BOOL isFail = FALSE;
 		int fidx = 0;
 		std::for_each(list.begin(), list.end(), [&isFail, &fidx](int(*callback)()) {
+#ifdef PRINT_DEBUG
 			printf("calling f: %i\n", fidx);
+#endif
 			int result = callback();
+#ifdef PRINT_DEBUG
 			printf("checker result: %i\n", result);
+#endif
 			if (result)
 			{
 				isFail = TRUE;
-				//return;
 			}
 			fidx++;
 		});
+#ifdef PRINT_DEBUG
 		printf("check result: %i\n\n", isFail);
+#endif
 		return isFail;
 	}
 }

@@ -90,7 +90,9 @@ PBYTE get_system_firmware(_In_ DWORD signature, _In_ DWORD table, _Out_ PDWORD p
 	DWORD resultBufferSize = GetSystemFirmwareTable(signature, table, firmwareTable, bufferSize);
 	if (resultBufferSize == 0)
 	{
+#ifdef PRINT_DEBUG
 		printf("First call failed :(\n");
+#endif
 		free(firmwareTable);
 		return NULL;
 	}
@@ -102,7 +104,9 @@ PBYTE get_system_firmware(_In_ DWORD signature, _In_ DWORD table, _Out_ PDWORD p
 		SecureZeroMemory(firmwareTable, resultBufferSize);
 		if (GetSystemFirmwareTable(signature, table, firmwareTable, bufferSize) == 0)
 		{
+#ifdef PRINT_DEBUG
 			printf("Second call failed :(\n");
+#endif
 			free(firmwareTable);
 			return NULL;
 		}

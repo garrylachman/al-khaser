@@ -52,7 +52,9 @@ VOID print_category(TCHAR* text)
 
 int print_results(int result, TCHAR* szMsg)
 {
+#ifdef PRINT_DEBUG
 	_tprintf(TEXT("[*] %s"), szMsg);
+#endif
 
 	/* align the result according to the length of the text */
 	int spaces_to_padd = 95 - _tcslen(szMsg);
@@ -61,10 +63,12 @@ int print_results(int result, TCHAR* szMsg)
 		spaces_to_padd--;
 	}
 	
+#ifdef PRINT_DEBUG
 	if (result == TRUE)
 		print_detected();
 	else
 		print_not_detected();
+#endif
 
 	/* log to file*/
 	TCHAR buffer[256] = _T("");
@@ -126,6 +130,7 @@ VOID print_last_error(LPTSTR lpszFunction)
 
     // Display the error message and exit the process
 
+#ifdef PRINT_DEBUG
     lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT, 
         (lstrlen((LPCTSTR)lpMsgBuf) + lstrlen((LPCTSTR)lpszFunction) + 40) * sizeof(TCHAR)); 
 
@@ -136,7 +141,7 @@ VOID print_last_error(LPTSTR lpszFunction)
 
 	_tprintf((LPCTSTR)lpDisplayBuf); 
 
-
+#endif
     LocalFree(lpMsgBuf);
     LocalFree(lpDisplayBuf);
 }

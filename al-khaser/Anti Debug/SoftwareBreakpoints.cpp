@@ -12,7 +12,9 @@ VOID My_Critical_Function()
 	int a = 1;
 	int b = 2;
 	int c = a + b;
+#ifdef PRINT_DEBUG
 	_tprintf(_T("I am critical function, you should protect against int3 bps %d"), c);
+#endif
 }
 
 

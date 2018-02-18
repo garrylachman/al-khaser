@@ -29,7 +29,9 @@ BOOL VirtualAlloc_WriteWatch_BufferOnly()
 	hitCount = 4096;
 	if (GetWriteWatch(0, buffer, 4096, addresses, &hitCount, &granularity) != 0)
 	{
+#ifdef PRINT_DEBUG
 		printf("GetWriteWatch failed. Last error: %d\n", GetLastError());
+#endif
 		result = FALSE;
 	}
 	else
@@ -58,43 +60,63 @@ BOOL VirtualAlloc_WriteWatch_APICalls()
 
 	if (GlobalGetAtomName(INVALID_ATOM, (LPTSTR)buffer, 1) != FALSE)
 	{
+#ifdef PRINT_DEBUG
 		printf("GlobalGetAtomName succeeded when it should've failed... not sure what happened!\n");
+#endif
+
 		result = FALSE;
 		error = TRUE;
 	}
 	if (GetEnvironmentVariable(L"%ThisIsAnInvalidEnvironmentVariableName?[]<>@\\;*!-{}#:/~%", (LPWSTR)buffer, 4096*4096) != FALSE)
 	{
+#ifdef PRINT_DEBUG
 		printf("GetEnvironmentVariable succeeded when it should've failed... not sure what happened!\n");
+#endif
+
 		result = FALSE;
 		error = TRUE;
 	}
 	if (GetBinaryType(L"%ThisIsAnInvalidFileName?[]<>@\\;*!-{}#:/~%", (LPDWORD)buffer) != FALSE)
 	{
+#ifdef PRINT_DEBUG
 		printf("GetBinaryType succeeded when it should've failed... not sure what happened!\n");
+#endif
+
 		result = FALSE;
 		error = TRUE;
 	}
 	if (HeapQueryInformation(0, (HEAP_INFORMATION_CLASS)69, buffer, 4096, NULL) != FALSE)
 	{
+#ifdef PRINT_DEBUG
 		printf("HeapQueryInformation succeeded when it should've failed... not sure what happened!\n");
+#endif
+
 		result = FALSE;
 		error = TRUE;
 	}
 	if (ReadProcessMemory(INVALID_HANDLE_VALUE, (LPCVOID)0x69696969, buffer, 4096, NULL) != FALSE)
 	{
+#ifdef PRINT_DEBUG
 		printf("ReadProcessMemory succeeded when it should've failed... not sure what happened!\n");
+#endif
 		result = FALSE;
 		error = TRUE;
 	}
 	if (GetThreadContext(INVALID_HANDLE_VALUE, (LPCONTEXT)buffer) != FALSE)
 	{
+#ifdef PRINT_DEBUG
 		printf("GetThreadContext succeeded when it should've failed... not sure what happened!\n");
+#endif
+
 		result = FALSE;
 		error = TRUE;
 	}
 	if (GetWriteWatch(0, &VirtualAlloc_WriteWatch_APICalls, 0, NULL, NULL, (PULONG)buffer) == 0)
 	{
+#ifdef PRINT_DEBUG
 		printf("GetWriteWatch succeeded when it should've failed... not sure what happened!\n");
+#endif
+
 		result = FALSE;
 		error = TRUE;
 	}
@@ -106,7 +128,10 @@ BOOL VirtualAlloc_WriteWatch_APICalls()
 		hitCount = 4096;
 		if (GetWriteWatch(0, buffer, 4096, addresses, &hitCount, &granularity) != 0)
 		{
+#ifdef PRINT_DEBUG
 			printf("GetWriteWatch failed. Last error: %d\n", GetLastError());
+#endif
+
 			result = FALSE;
 		}
 		else
@@ -118,7 +143,10 @@ BOOL VirtualAlloc_WriteWatch_APICalls()
 	}
 	else
 	{
+#ifdef PRINT_DEBUG
 		printf("Write watch API check skipped, ignore the result as it is inconclusive.\n");
+#endif
+
 	}
 
 	VirtualFree(addresses, 0, MEM_RELEASE);
@@ -140,8 +168,12 @@ BOOL VirtualAlloc_WriteWatch_IsDebuggerPresent()
 	hitCount = 4096;
 	if (GetWriteWatch(0, buffer, 4096, addresses, &hitCount, &granularity) != 0)
 	{
+#ifdef PRINT_DEBUG
 		printf("GetWriteWatch failed. Last error: %d\n", GetLastError());
+#endif
+
 		result = FALSE;
+
 	}
 	else
 	{
@@ -239,7 +271,9 @@ BOOL VirtualAlloc_WriteWatch_CodeWrite()
 		hitCount = 4096;
 		if (GetWriteWatch(0, buffer, 4096, addresses, &hitCount, &granularity) != 0)
 		{
+#ifdef PRINT_DEBUG
 			printf("GetWriteWatch failed. Last error: %d\n", GetLastError());
+#endif
 			result = FALSE;
 		}
 		else
