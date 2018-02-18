@@ -1,16 +1,17 @@
 #pragma once
 
-#ifdef ALKHASER_EXPORTS  
+/*#ifdef ALKHASER_EXPORTS  
 #define ALKHASER_API __declspec(dllexport)   
 #else  
 #define ALKHASER_API __declspec(dllimport)   
-#endif
+#endif*/
 
 #include <stdio.h>
 #include <vector>
 
 namespace AlKhaser {
-	class ALKHASER_API Detector
+	//class ALKHASER_API Detector
+	class Detector
 	{
 	public:
 		static enum CHECKERS {
